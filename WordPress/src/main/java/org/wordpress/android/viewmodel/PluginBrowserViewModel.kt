@@ -5,7 +5,6 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.os.Bundle
 import android.os.Handler
-import android.support.annotation.WorkerThread
 import android.text.TextUtils
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -35,7 +34,6 @@ import kotlin.properties.Delegates
 private const val KEY_SEARCH_QUERY = "KEY_SEARCH_QUERY"
 private const val KEY_TITLE = "KEY_TITLE"
 
-@WorkerThread
 class PluginBrowserViewModel @Inject
 constructor(private val mDispatcher: Dispatcher, private val mPluginStore: PluginStore) : ViewModel() {
     enum class PluginListType {
@@ -196,7 +194,7 @@ constructor(private val mDispatcher: Dispatcher, private val mPluginStore: Plugi
 
     // Network Callbacks
 
-    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    @Subscribe(threadMode = ThreadMode.MAIN)
     @SuppressWarnings("unused")
     fun onWPOrgPluginFetched(event: PluginStore.OnWPOrgPluginFetched) {
         if (event.isError) {
@@ -210,7 +208,7 @@ constructor(private val mDispatcher: Dispatcher, private val mPluginStore: Plugi
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    @Subscribe(threadMode = ThreadMode.MAIN)
     @SuppressWarnings("unused")
     fun onPluginDirectoryFetched(event: PluginStore.OnPluginDirectoryFetched) {
         val listResource = getListNetworkResourceForDirectoryType(event.type)
@@ -225,7 +223,7 @@ constructor(private val mDispatcher: Dispatcher, private val mPluginStore: Plugi
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    @Subscribe(threadMode = ThreadMode.MAIN)
     @SuppressWarnings("unused")
     fun onPluginDirectorySearched(event: PluginStore.OnPluginDirectorySearched) {
         if (searchQuery != event.searchTerm) {
@@ -239,7 +237,7 @@ constructor(private val mDispatcher: Dispatcher, private val mPluginStore: Plugi
         _searchResults.fetchedSuccessfully(event.plugins, false)
     }
 
-    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    @Subscribe(threadMode = ThreadMode.MAIN)
     @SuppressWarnings("unused")
     fun onSitePluginConfigured(event: PluginStore.OnSitePluginConfigured) {
         if (event.isError) {
@@ -253,7 +251,7 @@ constructor(private val mDispatcher: Dispatcher, private val mPluginStore: Plugi
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    @Subscribe(threadMode = ThreadMode.MAIN)
     @SuppressWarnings("unused")
     fun onSitePluginDeleted(event: PluginStore.OnSitePluginDeleted) {
         if (event.isError) {
@@ -267,7 +265,7 @@ constructor(private val mDispatcher: Dispatcher, private val mPluginStore: Plugi
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    @Subscribe(threadMode = ThreadMode.MAIN)
     @SuppressWarnings("unused")
     fun onSitePluginInstalled(event: PluginStore.OnSitePluginInstalled) {
         if (event.isError) {
@@ -281,7 +279,7 @@ constructor(private val mDispatcher: Dispatcher, private val mPluginStore: Plugi
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    @Subscribe(threadMode = ThreadMode.MAIN)
     @SuppressWarnings("unused")
     fun onSitePluginUpdated(event: PluginStore.OnSitePluginUpdated) {
         if (event.isError) {
