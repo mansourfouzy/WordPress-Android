@@ -362,27 +362,18 @@ constructor(private val mDispatcher: Dispatcher, private val mPluginStore: Plugi
 
     private fun submitSearch(query: String, delayed: Boolean) {
         // If the query is not long enough we don't need to delay it
-        if (delayed && shouldSearch) {
+        if (delayed) {
             handler.postDelayed({
                 if (query == searchQuery) {
                     submitSearch(query, false)
                 }
             }, 250)
         } else {
-            _searchResults.manuallyUpdateData(ArrayList())
+            // Reset network resource since query is changed and the previous status or data is not valid anymore
+            _searchResults.reset()
 
             if (shouldSearch) {
                 fetchPlugins(SEARCH, false)
-            } else {
-                // Due to the query being changed after the last fetch, the status won't ever be updated, so we need
-                // to manually do it. Consider the following case:
-                // 1. Search the plugins for "contact" which will change the status to FETCHING
-                // 2. Before the fetch completes delete the text
-                // 3. In `onPluginDirectorySearched` the result will be ignored, because the query changed, but it won't
-                // be triggered again, because another fetch didn't happen (due to query being empty)
-                // 4. The status will be stuck in FETCHING until another search occurs. The following reset fixes the
-                // problem.
-                _searchResults.resetStatus()
             }
         }
     }

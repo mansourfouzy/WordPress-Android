@@ -41,7 +41,8 @@ class MutableListNetworkResource<T>(private val paginationAvailable: Boolean = t
         updateStatusIfChanged(newStatus)
     }
 
-    fun resetStatus() {
+    fun reset() {
+        manuallyUpdateData(ArrayList())
         updateStatusIfChanged(Status.READY)
     }
 
