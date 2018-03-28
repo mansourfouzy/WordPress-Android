@@ -390,7 +390,7 @@ constructor(private val mDispatcher: Dispatcher, private val mPluginStore: Plugi
     }
 
     fun setTitle(title: String?) {
-        _title.postValue(title)
+        _title.value = title
     }
 
     private fun getListNetworkResourceForDirectoryType(directoryType: PluginDirectoryType):

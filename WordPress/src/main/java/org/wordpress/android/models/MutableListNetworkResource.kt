@@ -49,19 +49,19 @@ class MutableListNetworkResource<T>(private val paginationAvailable: Boolean = t
     // Data Management
 
     fun fetchedSuccessfully(newData: List<T>, canLoadMore: Boolean = false) {
-        _data.postValue(newData)
+        _data.value = newData
         updateStatusIfChanged(if (canLoadMore) Status.CAN_LOAD_MORE else Status.SUCCESS)
     }
 
     fun manuallyUpdateData(newData: List<T>) {
-        _data.postValue(newData)
+        _data.value = newData
     }
 
     // Utils
 
     private fun updateStatusIfChanged(newStatus: Status) {
         if (status.value != newStatus) {
-            _status.postValue(newStatus)
+            _status.value = newStatus
         }
     }
 }
