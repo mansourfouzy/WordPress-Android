@@ -71,7 +71,6 @@ constructor(private val mDispatcher: Dispatcher, private val mPluginStore: Plugi
     val searchResults: ListNetworkResource<ImmutablePluginModel>
         get() = _searchResults
 
-
     private val _title = MutableLiveData<String>()
     val title: LiveData<String>
         get() = _title
@@ -334,8 +333,9 @@ constructor(private val mDispatcher: Dispatcher, private val mPluginStore: Plugi
         }
     }
 
-    private fun updatePluginListWithNewPlugin(pluginListNetworkResource: MutableListNetworkResource<ImmutablePluginModel>,
-                                              newPluginMap: Map<String, ImmutablePluginModel>) {
+    private fun updatePluginListWithNewPlugin(
+            pluginListNetworkResource: MutableListNetworkResource<ImmutablePluginModel>,
+            newPluginMap: Map<String, ImmutablePluginModel>) {
         val pluginList = pluginListNetworkResource.data.value
         if (pluginList == null || pluginList.isEmpty() || newPluginMap.isEmpty()) {
             // Nothing to update
@@ -372,6 +372,7 @@ constructor(private val mDispatcher: Dispatcher, private val mPluginStore: Plugi
             }, 250)
         } else {
             _searchResults.manuallyUpdateData(ArrayList())
+            _searchResults.resetStatus()
 
             if (shouldSearch) {
                 fetchPlugins(SEARCH, false)
@@ -384,7 +385,6 @@ constructor(private val mDispatcher: Dispatcher, private val mPluginStore: Plugi
                 // be triggered again, because another fetch didn't happen (due to query being empty)
                 // 4. The status will be stuck in FETCHING until another search occurs. The following reset fixes the
                 // problem.
-                _searchResults.resetStatus()
             }
         }
     }
