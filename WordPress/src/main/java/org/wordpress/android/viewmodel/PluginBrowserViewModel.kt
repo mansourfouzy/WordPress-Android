@@ -195,7 +195,7 @@ constructor(private val mDispatcher: Dispatcher, private val mPluginStore: Plugi
     // Network Callbacks
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    @SuppressWarnings("unused")
+    @Suppress("unused")
     fun onWPOrgPluginFetched(event: PluginStore.OnWPOrgPluginFetched) {
         if (event.isError) {
             AppLog.e(T.PLUGINS, "An error occurred while fetching the wporg plugin with type: " + event.error.type)
@@ -209,7 +209,7 @@ constructor(private val mDispatcher: Dispatcher, private val mPluginStore: Plugi
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    @SuppressWarnings("unused")
+    @Suppress("unused")
     fun onPluginDirectoryFetched(event: PluginStore.OnPluginDirectoryFetched) {
         val listResource = getListNetworkResourceForDirectoryType(event.type)
         if (event.isError) {
@@ -224,7 +224,7 @@ constructor(private val mDispatcher: Dispatcher, private val mPluginStore: Plugi
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    @SuppressWarnings("unused")
+    @Suppress("unused")
     fun onPluginDirectorySearched(event: PluginStore.OnPluginDirectorySearched) {
         if (searchQuery != event.searchTerm) {
             return
@@ -238,7 +238,7 @@ constructor(private val mDispatcher: Dispatcher, private val mPluginStore: Plugi
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    @SuppressWarnings("unused")
+    @Suppress("unused")
     fun onSitePluginConfigured(event: PluginStore.OnSitePluginConfigured) {
         if (event.isError) {
             // The error should be handled wherever the action has been triggered from (probably PluginDetailActivity)
@@ -252,7 +252,7 @@ constructor(private val mDispatcher: Dispatcher, private val mPluginStore: Plugi
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    @SuppressWarnings("unused")
+    @Suppress("unused")
     fun onSitePluginDeleted(event: PluginStore.OnSitePluginDeleted) {
         if (event.isError) {
             // The error should be handled wherever the action has been triggered from (probably PluginDetailActivity)
@@ -266,7 +266,7 @@ constructor(private val mDispatcher: Dispatcher, private val mPluginStore: Plugi
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    @SuppressWarnings("unused")
+    @Suppress("unused")
     fun onSitePluginInstalled(event: PluginStore.OnSitePluginInstalled) {
         if (event.isError) {
             // The error should be handled wherever the action has been triggered from (probably PluginDetailActivity)
@@ -280,7 +280,7 @@ constructor(private val mDispatcher: Dispatcher, private val mPluginStore: Plugi
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    @SuppressWarnings("unused")
+    @Suppress("unused")
     fun onSitePluginUpdated(event: PluginStore.OnSitePluginUpdated) {
         if (event.isError) {
             // The error should be handled wherever the action has been triggered from (probably PluginDetailActivity)
