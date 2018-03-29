@@ -4,7 +4,7 @@ import android.arch.lifecycle.LiveData
 
 interface ListNetworkResource<T> {
     enum class Status {
-        READY, // Initial state or manual reset (mostly for search)
+        READY, // Initial state or after manual reset
 
         // Success states
         SUCCESS, // All data has been successfully fetched - unless user triggers a manual fetch, it's the final state

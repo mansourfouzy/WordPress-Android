@@ -69,7 +69,6 @@ constructor(private val mDispatcher: Dispatcher, private val mPluginStore: Plugi
     val searchResults: ListNetworkResource<ImmutablePluginModel>
         get() = _searchResults
 
-
     private val _title = MutableLiveData<String>()
     val title: LiveData<String>
         get() = _title
@@ -198,7 +197,8 @@ constructor(private val mDispatcher: Dispatcher, private val mPluginStore: Plugi
     @Suppress("unused")
     fun onWPOrgPluginFetched(event: PluginStore.OnWPOrgPluginFetched) {
         if (event.isError) {
-            AppLog.e(T.PLUGINS, "An error occurred while fetching the wporg plugin with type: " + event.error.type)
+            AppLog.e(T.PLUGINS,
+                    "An error occurred while fetching the wporg plugin with type: " + event.error.type)
             return
         }
         // Check if the slug is empty, if not add it to the set and only trigger the update
@@ -318,22 +318,23 @@ constructor(private val mDispatcher: Dispatcher, private val mPluginStore: Plugi
                     newPluginMap[slug] = immutablePlugin
                 }
             }
-            // By combining all the updated plugins into one map, we can post a single update to the UI after changes are
-            // reflected
+            // By combining all the updated plugins into one map, we can post a single update to the UI
+            // after changes are reflected
             updatePluginListWithNewPlugin(_featuredPlugins, newPluginMap)
             updatePluginListWithNewPlugin(_newPlugins, newPluginMap)
             updatePluginListWithNewPlugin(_popularPlugins, newPluginMap)
             updatePluginListWithNewPlugin(_searchResults, newPluginMap)
 
-            // Unfortunately we can't use the same method to update the site plugins because removing/installing plugins can
-            // mess up the list. Also we care most about the Site Plugins and using the store to get the correct plugin
-            // information is much more reliable than any manual update we can make
+            // Unfortunately we can't use the same method to update the site plugins because removing/installing plugins
+            // can mess up the list. Also we care most about the Site Plugins and using the store to get the correct
+            // plugin information is much more reliable than any manual update we can make
             reloadPluginDirectory(PluginDirectoryType.SITE)
         }
     }
 
-    private fun updatePluginListWithNewPlugin(pluginListNetworkResource: MutableListNetworkResource<ImmutablePluginModel>,
-                                              newPluginMap: Map<String, ImmutablePluginModel>) {
+    private fun updatePluginListWithNewPlugin(
+            pluginListNetworkResource: MutableListNetworkResource<ImmutablePluginModel>,
+            newPluginMap: Map<String, ImmutablePluginModel>) {
         val pluginList = pluginListNetworkResource.data.value
         if (pluginList == null || pluginList.isEmpty() || newPluginMap.isEmpty()) {
             // Nothing to update
