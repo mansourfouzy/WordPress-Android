@@ -13,7 +13,7 @@
     <string name="no_network_title">No network available</string>
     <string name="no_network_message">There is no network available</string>
     <string name="sign_out_wpcom">Log out of WordPress?</string>
-    <string name="sign_out_wpcom_lose_changes">You have changes to %d posts that haven’t been uploaded to your site. Logging out now will delete those changes. Log out anyway?</string>
+    <string name="sign_out_wpcom_lose_changes">You have changes to %d posts that haven’t been uploaded to your site. Logging out now will delete those changes from your device. Log out anyway?</string>
 
     <!-- form labels -->
     <string name="select_categories">Select categories</string>
