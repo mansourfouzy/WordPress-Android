@@ -33,6 +33,7 @@ import org.wordpress.android.fluxc.Dispatcher;
 import org.wordpress.android.fluxc.model.AccountModel;
 import org.wordpress.android.fluxc.store.AccountStore;
 import org.wordpress.android.fluxc.store.AccountStore.OnAccountChanged;
+import org.wordpress.android.fluxc.store.PostStore;
 import org.wordpress.android.fluxc.store.SiteStore;
 import org.wordpress.android.networking.GravatarApi;
 import org.wordpress.android.ui.ActivityLauncher;
@@ -89,6 +90,7 @@ public class MeFragment extends Fragment {
     @Inject Dispatcher mDispatcher;
     @Inject AccountStore mAccountStore;
     @Inject SiteStore mSiteStore;
+    @Inject PostStore mPostStore;
 
     public static MeFragment newInstance() {
         return new MeFragment();
@@ -321,9 +323,13 @@ public class MeFragment extends Fragment {
     }
 
     private void signOutWordPressComWithConfirmation() {
-        String message = String.format(getString(R.string.sign_out_wpcom_confirm),
-                                       mAccountStore.getAccount().getUserName());
-
+        int numLocalChanges = 0; // TODO: mPostStore.getNumLocalChanges();
+        String message;
+        if (numLocalChanges > 0) {
+            message = String.format(getString(R.string.sign_out_wpcom_lose_changes), numLocalChanges);
+        } else {
+            message = getString(R.string.sign_out_wpcom);
+        }
         new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.Calypso_Dialog))
                 .setMessage(message)
                 .setPositiveButton(R.string.signout, new DialogInterface.OnClickListener() {
